@@ -9,9 +9,10 @@
   roles:
     - rvm_io.ruby
     - common
+    - ANXS.postgresql
   tags:
     - init-setup
-    
+
 # --------------------------------------------
 # SERVERS
 - name: Setup Deploy User on Servers
@@ -38,6 +39,6 @@
   roles:
     - abtris.nginx-passenger
     - rvm_io.ruby
-    # - ANXS.postgresql
+    - ANXS.postgresql
   tags:
     - servers
