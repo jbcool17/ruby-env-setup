@@ -1,0 +1,43 @@
+---
+
+- name: Configure servers with ruby support for single user
+  hosts: setup
+  user: 'vagrant'
+  vars:
+    rvm1_rubies: ['ruby-2.3.1']
+    rvm1_user: 'vagrant'
+  roles:
+    - rvm_io.ruby
+    - common
+  tags:
+    - init-setup
+    
+# --------------------------------------------
+# SERVERS
+- name: Setup Deploy User on Servers
+  hosts: servers
+  user: root
+  vars:
+    new_user: deploy
+    new_password: deploy # This Pass in not secure, please update
+  tasks:
+    - name: Creating user "{{ new_user }}" for deploying
+      user: name={{ new_user }} password={{ new_password |password_hash('sha512') }} append=yes shell=/bin/bash
+  tags:
+    - deploy-user
+
+# --------------------------------------------
+# SERVERS - RVM / NGINX
+- name: Setup Staging & Production Servers
+  hosts: servers
+  user: 'vagrant'
+  sudo: yes
+  vars:
+    rvm1_rubies: ['ruby-2.3.1']
+    rvm1_user: 'deploy'
+  roles:
+    - abtris.nginx-passenger
+    - rvm_io.ruby
+    # - ANXS.postgresql
+  tags:
+    - servers
