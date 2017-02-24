@@ -1,4 +1,4 @@
-# multimachines
+# ruby-env-setup
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 [![Stories in Progress](https://badge.waffle.io/jbcool17/multimachine.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/jbcool17/multimachine)
