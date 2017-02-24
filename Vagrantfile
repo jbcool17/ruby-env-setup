@@ -11,15 +11,20 @@ Vagrant.configure("2") do |config|
   config.vm.define "development" do |subconfig|
     subconfig.vm.box = BOX_IMAGE
     subconfig.vm.hostname = "development"
-    subconfig.vm.network :private_network, ip: "192.168.56.100"
+    subconfig.vm.network :private_network, ip: "192.168.56.120"
     config.vm.synced_folder "./Projects", "/home/vagrant/Projects", type: "nfs"
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "./server-setup-ansible/provision.yml"
+    end
   end
 
   (1..NODE_COUNT).each do |i|
     config.vm.define "#{MACHINES[i]}" do |subconfig|
       subconfig.vm.box = BOX_IMAGE
       subconfig.vm.hostname = "#{MACHINES[i]}"
-      subconfig.vm.network :private_network, ip: "192.168.56.#{i + 100}"
+      subconfig.vm.network :private_network, ip: "192.168.56.#{i + 120}"
 
       subconfig.vm.provider "virtualbox" do |v|
         v.memory = 1024
